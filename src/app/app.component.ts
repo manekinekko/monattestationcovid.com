@@ -1,4 +1,4 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, ViewChild, ElementRef } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { SignatureComponent, SignatureData } from "./signature.component";
@@ -6,6 +6,7 @@ import { distinctUntilChanged, debounce } from "rxjs/operators";
 import { LSService } from "./ls.service";
 import { interval } from "rxjs";
 import { MatSelectionList } from "@angular/material/list";
+import { PdfService } from "./pdf.service";
 
 @Component({
   selector: "app-root",
@@ -28,7 +29,7 @@ import { MatSelectionList } from "@angular/material/list";
             <mat-label>Né(e) le</mat-label>
             <input
               autocomplete="off"
-              formControlName="birthday"
+              formControlName="birthdate"
               matInput
               [matDatepicker]="birthdatePicker"
             />
@@ -54,7 +55,7 @@ import { MatSelectionList } from "@angular/material/list";
           <mat-hint>Séléctionnez un motif parmi la liste ci-dessous:</mat-hint>
           <mat-selection-list
             multiple="true"
-            formControlName="reason"
+            formControlName="reasons"
             color="primary"
           >
             <mat-list-option
@@ -108,23 +109,18 @@ import { MatSelectionList } from "@angular/material/list";
             Signer
           </button>
           <button
-            mat-stroked-button
-            (click)="print()"
-            [disabled]="shouldDisableButton()"
-          >
-            Imprimer
-          </button>
-          <!-- <button
             color="primary"
             mat-stroked-button
             type="submit"
+            (click)="downloadPDF()"
             [disabled]="shouldDisableButton()"
           >
             Télécharger le PDF
-          </button> -->
+          </button>
         </main>
       </footer>
     </form>
+    <iframe hidden src="void();" #template></iframe>
   `,
   styles: [
     `
@@ -159,7 +155,7 @@ import { MatSelectionList } from "@angular/material/list";
         height: auto !important;
         margin: 20px 0 20px;
       }
-      :host /deep/ .mat-list-single-selected-option {
+      :host /deep/ [aria-selected="true"] {
         outline: solid !important;
         outline-color: #4153af !important;
         background: white;
@@ -194,53 +190,6 @@ import { MatSelectionList } from "@angular/material/list";
         display: flex;
         justify-content: center;
       }
-
-      @media print {
-        body {
-          max-width: 700px;
-        }
-        .mat-list-base {
-          padding: 0;
-        }
-        .mat-list-item-content {
-          padding: 20px;
-        }
-        .user-info {
-          margin-bottom: -30px;
-        }
-        form {
-          margin-top: 15px;
-        }
-        p {
-          margin: 0;
-          padding: 5px;
-        }
-        main {
-          margin: 20px;
-        }
-        .signature-pad {
-          border: 0;
-        }
-        .action-buttons,
-        .mat-list-option:not([aria-selected="true"]),
-        mat-hint {
-          display: none;
-        }
-        footer {
-          display: flex;
-          margin: 0;
-          justify-content: flex-end;
-        }
-        footer main {
-        }
-        .signature-city-date {
-          display: flex;
-          flex-direction: column;
-        }
-        img {
-          width: 240px;
-        }
-      }
     `
   ]
 })
@@ -260,52 +209,49 @@ export class AppComponent {
       value: "b"
     },
     {
-      description: `certifie que mon déplacement est lié au motif suivant (cocher la
-        case) autorisé par l’article 1er du décret du 16 mars 2020 portant
-        réglementation des déplacements dans le cadre de la lutte contre la
-        propagation du virus Covid-19`,
-      value: "c"
-    },
-    {
       description: `déplacements pour motif de santé`,
-      value: "d"
+      value: "c"
     },
     {
       description: `déplacements pour motif familial impérieux, pour l’assistance aux
       personnes vulnérables ou la garde d’enfants`,
-      value: "e"
+      value: "d"
     },
     {
       description: `déplacements brefs, à proximité du domicile, liés à l’activité
       physique individuelle des personnes, à l’exclusion de toute
       pratique sportive collective, et aux besoins des animaux de
       compagnie`,
-      value: "f"
+      value: "e"
     }
   ];
   form: FormGroup;
   @ViewChild(MatSelectionList, { static: true }) reasonsRef: MatSelectionList;
+  @ViewChild("template", { static: true }) templateRef: ElementRef<
+    HTMLIFrameElement
+  >;
 
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
-    private storage: LSService
+    private storage: LSService,
+    private pdf: PdfService
   ) {
-    const date = new Date();
-    const yearValue = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const monthValue = (month < 10 ? `0` : ``) + month;
-    const day = date.getDate();
-    const dayValue = (day < 10 ? `0` : ``) + day;
-    const dateValue = `${yearValue}-${monthValue}-${dayValue}`;
+    // const date = new Date();
+    // const yearValue = date.getFullYear();
+    // const month = date.getMonth() + 1;
+    // const monthValue = (month < 10 ? `0` : ``) + month;
+    // const day = date.getDate();
+    // const dayValue = (day < 10 ? `0` : ``) + day;
+    // const dateValue = `${yearValue}-${monthValue}-${dayValue}`;
 
     this.form = this.formBuilder.group({
       name: ["", Validators.required],
-      birthday: ["", Validators.required],
+      birthdate: ["", Validators.required],
       address: ["", Validators.required],
       city: ["", Validators.required],
-      date: [dateValue, Validators.required],
-      reason: ["", Validators.required],
+      date: [new Date(), Validators.required],
+      reasons: ["", Validators.required],
       signature: [null, Validators.required]
     });
 
@@ -337,10 +283,6 @@ export class AppComponent {
 
     if (Object.keys(storedForm).length > 0) {
       this.form.patchValue(storedForm);
-
-      if (storedForm.reasons) {
-        this.reasonsRef.focus(storedForm.reasons.pop());
-      }
     }
   }
 
@@ -353,8 +295,8 @@ export class AppComponent {
     });
   }
 
-  print() {
-    window.print();
+  downloadPDF() {
+    this.pdf.download(this.templateRef.nativeElement, this.form.value);
   }
 
   shouldDisableButton() {
