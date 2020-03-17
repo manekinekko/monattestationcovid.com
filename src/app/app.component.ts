@@ -52,7 +52,11 @@ import { MatSelectionList } from "@angular/material/list";
             propagation du virus Covid-19 :
           </p>
           <mat-hint>Séléctionnez un motif parmi la liste ci-dessous:</mat-hint>
-          <mat-selection-list multiple="false" formControlName="reason">
+          <mat-selection-list
+            multiple="true"
+            formControlName="reason"
+            color="primary"
+          >
             <mat-list-option
               *ngFor="let reason of reasons"
               value="{{ reason.value }}"
@@ -144,7 +148,7 @@ import { MatSelectionList } from "@angular/material/list";
         margin: 20px 0 20px;
       }
       :host /deep/ .mat-list-option b {
-        background: gray;
+        background: #4153af;
         color: white;
         padding: 2px 10px !important;
         margin: 0px 14px 0 -16px !important;
@@ -157,12 +161,16 @@ import { MatSelectionList } from "@angular/material/list";
       }
       :host /deep/ .mat-list-single-selected-option {
         outline: solid !important;
+        outline-color: #4153af !important;
         background: white;
       }
       :host /deep/ .mat-list-text {
         display: flex;
         flex-direction: row !important;
         overflow: visible !important;
+      }
+      :host /deep/ .mat-form-field-appearance-outline .mat-form-field-wrapper {
+        margin: 0 !important;
       }
       .signature-pad {
         display: flex;
@@ -172,7 +180,7 @@ import { MatSelectionList } from "@angular/material/list";
         padding-bottom: 20px;
       }
       img {
-        border: 1px solid gray;
+        border: 1px solid #4355a9;
         width: 100%;
         max-width: 355px;
       }
@@ -214,7 +222,7 @@ import { MatSelectionList } from "@angular/material/list";
           border: 0;
         }
         .action-buttons,
-        .mat-list-option:not(.mat-list-single-selected-option),
+        .mat-list-option:not([aria-selected="true"]),
         mat-hint {
           display: none;
         }
@@ -320,7 +328,6 @@ export class AppComponent {
     const storedForm = this.storage.get("form");
 
     if (Object.keys(storedForm).length === 0) {
-      console.log("init form with", this.form.value);
       this.storage.set("form", this.form.value);
     }
   }
@@ -329,7 +336,6 @@ export class AppComponent {
     const storedForm = this.storage.get("form");
 
     if (Object.keys(storedForm).length > 0) {
-      console.log("restoring form", storedForm);
       this.form.patchValue(storedForm);
 
       if (storedForm.reasons) {
@@ -341,8 +347,6 @@ export class AppComponent {
   openSignatureDialog() {
     const dialogRef = this.dialog.open(SignatureComponent, {});
     dialogRef.afterClosed().subscribe((data: SignatureData) => {
-      console.log(data);
-
       if (data) {
         this.form.patchValue({ signature: data.signatureImage });
       }

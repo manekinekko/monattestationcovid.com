@@ -11,6 +11,8 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AppComponent } from "./app.component";
 import { SignatureComponent } from "./signature.component";
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent, SignatureComponent],
@@ -24,7 +26,8 @@ import { SignatureComponent } from "./signature.component";
     MatDialogModule,
     MatInputModule,
     MatNativeDateModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: "fr-FR" }],
   bootstrap: [AppComponent]

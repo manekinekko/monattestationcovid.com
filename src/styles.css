@@ -13,9 +13,17 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+body > footer {
+  font-size: 0.7em;
+  color: #878787;
+  padding: 20px;
+}
+
 @media print {
   body {
     max-width: 90vw;
-    overflow: hidden;
+  }
+  footer {
+    display: none;
   }
 }
