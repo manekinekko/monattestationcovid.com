@@ -30,8 +30,13 @@ import { MatSelectionList } from "@angular/material/list";
               autocomplete="off"
               formControlName="birthday"
               matInput
-              type="date"
+              [matDatepicker]="birthdatePicker"
             />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="birthdatePicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker touchUi #birthdatePicker></mat-datepicker>
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Demeurant</mat-label>
@@ -72,8 +77,13 @@ import { MatSelectionList } from "@angular/material/list";
               autocomplete="off"
               formControlName="date"
               matInput
-              type="date"
+              [matDatepicker]="signedOnDatePicker"
             />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="signedOnDatePicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker touchUi #signedOnDatePicker></mat-datepicker>
           </mat-form-field>
         </main>
         <main class="signature-pad">
