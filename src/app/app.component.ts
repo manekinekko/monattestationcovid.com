@@ -37,7 +37,11 @@ import { PdfService } from "./pdf.service";
               matSuffix
               [for]="birthdatePicker"
             ></mat-datepicker-toggle>
-            <mat-datepicker touchUi #birthdatePicker></mat-datepicker>
+            <mat-datepicker
+              touchUi
+              #birthdatePicker
+              [startAt]="startAt"
+            ></mat-datepicker>
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Demeurant</mat-label>
@@ -226,6 +230,7 @@ export class AppComponent {
     }
   ];
   form: FormGroup;
+  startAt: Date;
   @ViewChild(MatSelectionList, { static: true }) reasonsRef: MatSelectionList;
   @ViewChild("template", { static: true }) templateRef: ElementRef<
     HTMLIFrameElement
@@ -237,14 +242,6 @@ export class AppComponent {
     private storage: LSService,
     private pdf: PdfService
   ) {
-    // const date = new Date();
-    // const yearValue = date.getFullYear();
-    // const month = date.getMonth() + 1;
-    // const monthValue = (month < 10 ? `0` : ``) + month;
-    // const day = date.getDate();
-    // const dayValue = (day < 10 ? `0` : ``) + day;
-    // const dateValue = `${yearValue}-${monthValue}-${dayValue}`;
-
     this.form = this.formBuilder.group({
       name: ["", Validators.required],
       birthdate: ["", Validators.required],
@@ -254,6 +251,9 @@ export class AppComponent {
       reasons: ["", Validators.required],
       signature: [null, Validators.required]
     });
+
+    // make Generation-Y happy :)
+    this.startAt = new Date(1995, 0, 0);
 
     this.initializeForm();
   }
