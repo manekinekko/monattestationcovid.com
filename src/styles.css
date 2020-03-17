@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  user-select: none;
+  padding: 10px;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: justify;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+@media print {
+  body {
+    max-width: 90vw;
+    overflow: hidden;
+  }
+}
