@@ -124,7 +124,7 @@ import { PdfService } from "./pdf.service";
         </main>
       </footer>
     </form>
-    <iframe hidden src="void();" #template></iframe>
+    <iframe hidden src="#" #template></iframe>
   `,
   styles: [
     `
