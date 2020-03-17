@@ -52,6 +52,7 @@ import { MatSelectionList } from "@angular/material/list";
               *ngFor="let reason of reasons"
               value="{{ reason.value }}"
             >
+              <b>{{ reason.value }}</b>
               {{ reason.description }};
             </mat-list-option>
           </mat-selection-list>
@@ -132,14 +133,26 @@ import { MatSelectionList } from "@angular/material/list";
         height: auto !important;
         margin: 20px 0 20px;
       }
+      :host /deep/ .mat-list-option b {
+        background: gray;
+        color: white;
+        padding: 2px 10px !important;
+        margin: 0px 14px 0 -16px !important;
+        text-transform: uppercase;
+      }
 
       :host /deep/ .mat-list-option {
         height: auto !important;
         margin: 20px 0 20px;
       }
       :host /deep/ .mat-list-single-selected-option {
-        outline: dashed !important;
+        outline: solid !important;
         background: white;
+      }
+      :host /deep/ .mat-list-text {
+        display: flex;
+        flex-direction: row !important;
+        overflow: visible !important;
       }
       .signature-pad {
         display: flex;
@@ -221,35 +234,35 @@ export class AppComponent {
     d’activités ne pouvant être organisées sous forme de télétravail
     (sur justificatif permanent) ou déplacements professionnels ne
     pouvant être différés`,
-      value: 0
+      value: "a"
     },
     {
       description: `déplacements pour effectuer des achats de première nécessité dans
       des établissements autorisés (liste sur gouvernement.fr)`,
-      value: 1
+      value: "b"
     },
     {
       description: `certifie que mon déplacement est lié au motif suivant (cocher la
         case) autorisé par l’article 1er du décret du 16 mars 2020 portant
         réglementation des déplacements dans le cadre de la lutte contre la
         propagation du virus Covid-19`,
-      value: 2
+      value: "c"
     },
     {
       description: `déplacements pour motif de santé`,
-      value: 3
+      value: "d"
     },
     {
       description: `déplacements pour motif familial impérieux, pour l’assistance aux
       personnes vulnérables ou la garde d’enfants`,
-      value: 3
+      value: "e"
     },
     {
       description: `déplacements brefs, à proximité du domicile, liés à l’activité
       physique individuelle des personnes, à l’exclusion de toute
       pratique sportive collective, et aux besoins des animaux de
       compagnie`,
-      value: 4
+      value: "f"
     }
   ];
   form: FormGroup;
