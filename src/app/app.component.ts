@@ -182,10 +182,6 @@ import { SignatureData } from "./signature.component";
         border-bottom: 1px solid lightgray;
         padding-bottom: 20px;
       }
-      img {
-        width: 100%;
-        max-width: 355px;
-      }
       footer {
         margin-top: 50px;
       }
