@@ -1,12 +1,11 @@
-import { Component, ViewChild, ElementRef } from "@angular/core";
+import { Component, ElementRef, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
-import { SignatureComponent, SignatureData } from "./signature.component";
-import { distinctUntilChanged, debounce } from "rxjs/operators";
-import { LSService } from "./ls.service";
-import { interval } from "rxjs";
 import { MatSelectionList } from "@angular/material/list";
+import { interval } from "rxjs";
+import { debounce, distinctUntilChanged } from "rxjs/operators";
+import { LSService } from "./ls.service";
 import { PdfService } from "./pdf.service";
+import { SignatureData } from "./signature.component";
 
 @Component({
   selector: "app-root",
@@ -50,13 +49,12 @@ import { PdfService } from "./pdf.service";
         </main>
 
         <main>
-          <p matSubheader>
+          <mat-hint>
             certifie que mon déplacement est lié au motif suivant (cocher la
             case) autorisé par l’article 1er du décret du 16 mars 2020 portant
             réglementation des déplacements dans le cadre de la lutte contre la
             propagation du virus Covid-19 :
-          </p>
-          <mat-hint>Séléctionnez un motif parmi la liste ci-dessous:</mat-hint>
+          </mat-hint>
           <mat-selection-list
             multiple="true"
             formControlName="reasons"
@@ -96,21 +94,27 @@ import { PdfService } from "./pdf.service";
           </mat-form-field>
         </main>
         <main class="signature-pad">
-          <img
-            *ngIf="form.controls.signature.value"
-            [src]="form.controls.signature.value"
-            (click)="openSignatureDialog()"
-          />
+          <app-signature
+            #signaturePad
+            (onSignatureData)="onSignatureData($event)"
+            (onSignatureClear)="onSignatureClear($event)"
+            [signatureData]="form.controls.signatureData.value"
+          ></app-signature>
           <input autocomplete="off" formControlName="signature" type="hidden" />
+          <input
+            autocomplete="off"
+            formControlName="signatureData"
+            type="hidden"
+          />
         </main>
 
         <main class="action-buttons">
           <button
             mat-stroked-button
-            (click)="openSignatureDialog()"
-            color="accent"
+            (click)="signaturePad.clear()"
+            color="warn"
           >
-            Signer
+            Effacer Signature
           </button>
           <button
             color="primary"
@@ -174,13 +178,11 @@ import { PdfService } from "./pdf.service";
       }
       .signature-pad {
         display: flex;
-        justify-content: flex-end;
-        align-items: end;
+        justify-content: center;
         border-bottom: 1px solid lightgray;
         padding-bottom: 20px;
       }
       img {
-        border: 1px solid #4355a9;
         width: 100%;
         max-width: 355px;
       }
@@ -237,7 +239,6 @@ export class AppComponent {
   >;
 
   constructor(
-    public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private storage: LSService,
     private pdf: PdfService
@@ -249,7 +250,8 @@ export class AppComponent {
       city: ["", Validators.required],
       date: [new Date(), Validators.required],
       reasons: ["", Validators.required],
-      signature: [null, Validators.required]
+      signature: [null, Validators.required],
+      signatureData: [null]
     });
 
     // make Generation-Y happy :)
@@ -286,13 +288,22 @@ export class AppComponent {
     }
   }
 
-  openSignatureDialog() {
-    const dialogRef = this.dialog.open(SignatureComponent, {});
-    dialogRef.afterClosed().subscribe((data: SignatureData) => {
-      if (data) {
-        this.form.patchValue({ signature: data.signatureImage });
-      }
-    });
+  onSignatureData(data: SignatureData) {
+    if (data) {
+      this.form.patchValue({
+        signature: data.signatureImage,
+        signatureData: data.signatureData
+      });
+    }
+  }
+
+  onSignatureClear(isClear: boolean) {
+    if (isClear) {
+      this.form.patchValue({
+        signature: null,
+        signatureData: null
+      });
+    }
   }
 
   downloadPDF() {

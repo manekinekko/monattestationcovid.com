@@ -36,7 +36,8 @@ export class PdfService {
     printableContent = printableContent.replace(/#\w#/g, "");
 
     iframe.contentDocument.documentElement.innerHTML = printableContent;
-    iframe.contentWindow.focus();
-    iframe.contentWindow.print();
+
+    // defer task
+    setTimeout(_ => iframe.contentWindow.print());
   }
 }
