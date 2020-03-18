@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://www.googleapis.com" />
+    <link rel="dns-prefetch" href="https://monattestationcovid.com" />
     <meta charset="utf-8" />
     <title>
-      Je remplis mon attestation de déplacement dérogatoire - COVID-19
+      Je remplis mon attestation de déplacement dérogatoire en ligne - COVID-19
     </title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -14,19 +17,23 @@
     <meta name="author" content="Wassim Chegham" />
     <meta
       name="description"
-      content="Je remplis mon attestation de déplacement dérogatoire - COVID-19."
+      content="Je remplis mon attestation de déplacement dérogatoire en ligne - COVID-19."
     />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="https://twitter.com/manekinekko" />
+    <meta name="twitter:site" content="https://monattestationcovid.com" />
     <meta name="twitter:creator" content="@manekinekko" />
-    <meta property="og:url" content="http://monattestationcovid.com" />
+    <meta property="og:url" content="https://monattestationcovid.com" />
     <meta
       property="og:title"
-      content="Je remplis mon attestation de déplacement dérogatoire - COVID-19."
+      content="Je remplis mon attestation de déplacement dérogatoire en ligne - COVID-19."
     />
     <meta
       property="og:description"
-      content="Je remplis mon attestation de déplacement dérogatoire - COVID-19."
+      content="Je remplis mon attestation de déplacement dérogatoire en ligne - COVID-19."
+    />
+    <meta
+      property="og:image"
+      content="https://monattestationcovid.com/assets/monattestationcovid.png"
     />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link
@@ -45,8 +52,14 @@
         dataLayer.push(arguments);
       }
       gtag("js", new Date());
-
-      gtag("config", "UA-160998480-1");
+      // Disable Google Analytics measurement
+      window["ga-disable-UA-160998480-1"] = true;
+      // IP anonymization
+      gtag("config", "UA-160998480-1", {
+        anonymize_ip: true,
+        allow_google_signals: false,
+        allow_ad_personalization_signals: false
+      });
     </script>
   </head>
   <body class="mat-typography">
@@ -65,7 +78,9 @@
     <footer>
       <p>
         Ceci est une application communautaire et
-        <a href="https://github.com/manekinekko/adc" target="__blank"
+        <a
+          href="https://github.com/manekinekko/monattestationcovid.com"
+          target="__blank"
           >open-source</a
         >. Vos informations sont stockées sur votre appareil.
       </p>
