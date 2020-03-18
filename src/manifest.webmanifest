@@ -1,6 +1,6 @@
 {
-  "name": "ADC",
-  "short_name": "ADC",
+  "name": "monattestationcovid",
+  "short_name": "monattestationcovid",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
