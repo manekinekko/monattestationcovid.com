@@ -128,7 +128,7 @@ import { SignatureData } from "./signature.component";
         </main>
       </footer>
     </form>
-    <iframe hidden src="#" #template></iframe>
+    <iframe hidden src="/assets/template.html" #template></iframe>
   `,
   styles: [
     `
