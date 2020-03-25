@@ -1,27 +1,52 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <style>
-  * {
+  body {
     font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+  }
+  .checkbox {
+    display: block;
+    border: 1.5px solid black;
+    width: 20px;
+    height: 20px;
+    margin: 20px;
+    text-align: center;
+  }
+  tr {
+    display: flex;
+    align-items: center;
+  }
+  .signature {
+    display: flex;
+    align-items: center;
+  }
+  .signature img {
+    margin: 2px;
+  }
+  footer {
+    font-size: 9px;
   }
 </style>
 <div class="page" title="Page 1">
   <div class="layoutArea">
     <div class="column">
       <p style="text-align: center;">
-        <strong>ATTESTATION DE DÉPLACEMENT DÉROGATOIRE</strong>
+        <strong>ATTESTATION DE DÉPLACEMENT DÉROGATOIRE</strong>
       </p>
       <p style="text-align: center;">
-        En application de l&rsquo;article 1er du décret du 16 mars 2020 portant
-        réglementation des déplacements dans le cadre de la lutte contre la
-        propagation du virus Covid-19 :
+        En application de l’article 3 du décret du 23 mars 2020 prescrivant les
+        mesures générales nécessaires pour faire face à l’épidémie de Covid19
+        dans le cadre de l’état d’urgence sanitaire
       </p>
       <p>&nbsp;</p>
-      <p>Je soussigné(e)</p>
+      <p>Je soussigné(e),</p>
     </div>
   </div>
   <div class="layoutArea">
     <div class="column">
-      <p>Mme / M. <strong>#NAME#</strong></p>
-      <p>Né(e) le : <strong>#BIRTHDATE#</strong></p>
+      <p>Mme/M. : <strong>#NAME#</strong></p>
+      <p>Né(e) le : <strong>#BIRTHDATE#</strong></p>
+      <p>À : <strong>#BIRTHCITY#</strong></p>
       <p>Demeurant : <strong>#ADDRESS#</strong></p>
     </div>
     <div class="column">&nbsp;</div>
@@ -29,62 +54,100 @@
   <div class="layoutArea">
     <div class="column">
       <p>
-        certifie que mon déplacement est lié au motif suivant (cocher la case)
-        autorisé par l&rsquo;article 1er du décret du 16 mars 2020 portant
-        réglementation des déplacements dans le cadre de la lutte contre la
-        propagation du virus Covid-19 :
+        certifie que mon déplacement est lié au motif suivant (cocher la case)
+        autorisé par l’article 3 du décret du 23 mars 2020 prescrivant les
+        mesures générales nécessaires pour faire face à l’épidémie de Covid19
+        dans le cadre de l’état d’urgence sanitaire<sup>1</sup> :
       </p>
       <table>
         <tbody>
           <tr>
-            <td>#a#</td>
+            <td><span class="checkbox">1</span></td>
             <td>
-              déplacements entre le domicile et le lieu d&rsquo;exercice de
-              l&rsquo;activité professionnelle, lorsqu&rsquo;ils sont
-              indispensables à l&rsquo;exercice d&rsquo;activités ne pouvant
-              être organisées sous forme de télétravail (sur justificatif
-              permanent) ou déplacements professionnels ne pouvant être différés
-              ;
+              Déplacements entre le domicile et le lieu d’exercice de l’activité
+              professionnelle, lorsqu’ils sont indispensables à l’exercice
+              d’activités ne pouvant être organisées sous forme de télétravail
+              ou déplacements professionnels ne pouvant être
+              différés<sup>2</sup>.
             </td>
           </tr>
           <tr>
-            <td>#b#</td>
+            <td><span class="checkbox">2</span></td>
             <td>
-              déplacements pour effectuer des achats de première nécessité dans
-              des établissements autorisés (liste sur gouvernement.fr) ;
+              Déplacements pour effectuer des achats de fournitures nécessaires
+              à l’activité professionnelle et des achats de première
+              nécessité<sup>3</sup>
+              dans des établissements dont les activités demeurent autorisées
+              (liste sur gouvernement.fr).
             </td>
           </tr>
           <tr>
-            <td>#c#</td>
-            <td>déplacements pour motif de santé ;</td>
-          </tr>
-          <tr>
-            <td>#d#</td>
+            <td><span class="checkbox">3</span></td>
             <td>
-              déplacements pour motif familial impérieux, pour
-              l&rsquo;assistance aux personnes vulnérables ou la garde
-              d&rsquo;enfants ;
+              Consultations et soins ne pouvant être assurés à distance et ne
+              pouvant être différés ; consultations et soins des patients
+              atteints d'une affection de longue durée.
             </td>
           </tr>
           <tr>
-            <td>#e#</td>
+            <td><span class="checkbox">4</span></td>
             <td>
-              déplacements brefs, à proximité du domicile, liés à
-              l&rsquo;activité physique individuelle des personnes, à
-              l&rsquo;exclusion de toute pratique sportive collective, et aux
-              besoins des animaux de compagnie.
+              Déplacements pour motif familial impérieux, pour l’assistance aux
+              personnes vulnérables ou la garde d’enfants.
+            </td>
+          </tr>
+          <tr>
+            <td><span class="checkbox">5</span></td>
+            <td>
+              Déplacements brefs, dans la limite d'une heure quotidienne et dans
+              un rayon maximal d'un kilomètre autour du domicile, liés soit à
+              l'activité physique individuelle des personnes, à l'exclusion de
+              toute pratique sportive collective et de toute proximité avec
+              d'autres personnes, soit à la promenade avec les seules personnes
+              regroupées dans un même domicile, soit aux besoins des animaux de
+              compagnie.
+            </td>
+          </tr>
+          <tr>
+            <td><span class="checkbox">6</span></td>
+            <td>
+              Convocation judiciaire ou administrative.
+            </td>
+          </tr>
+          <tr>
+            <td><span class="checkbox">7</span></td>
+            <td>
+              Participation à des missions d’intérêt général sur demande de
+              l’autorité administrative.
             </td>
           </tr>
         </tbody>
       </table>
-      <p style="text-align: right;">&nbsp;</p>
-      <p style="text-align: right;">
-        Fait à <strong>#CITY#</strong>, le <strong>#DATE#</strong>
+      <p>Fait à : <strong>#CITY#</strong></p>
+      <p>Le : <strong>#DATE#</strong> à <strong>#TIME#</strong></p>
+      <p class="signature">
+        Signature :
+        <img crossorigin="anonymous" height="100" src="#SIGNATURE#" alt="" />
       </p>
-      <p style="text-align: right;">(signature)</p>
-      <p style="text-align: right;">
-        <img crossorigin="anonymous" width="200" src="#SIGNATURE#" alt="" />
-      </p>
+      <footer>
+        <p>
+          <sup>1</sup> Les personnes souhaitant bénéficier de l'une de ces
+          exceptions doivent se munir s’il y a lieu, lors de leurs déplacements
+          hors de leur domicile, d'un document leur permettant de justifier que
+          le déplacement considéré entre dans le champ de l'une de ces
+          exceptions.
+        </p>
+        <p>
+          <sup>2</sup> A utiliser par les travailleurs non-salariés, lorsqu’ils
+          ne peuvent disposer d’un justificatif de déplacement établi par leur
+          employeur.
+        </p>
+        <p>
+          <sup>3</sup> Y compris les acquisitions à titre gratuit (distribution
+          de denrées alimentaires...) et les déplacements liés à la perception
+          de prestations sociales et au retrait d’espèces.
+        </p>
+      </footer>
     </div>
   </div>
 </div>

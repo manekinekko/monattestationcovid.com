@@ -8,6 +8,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatListModule } from "@angular/material/list";
+import { MatSelectModule } from "@angular/material/select";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ServiceWorkerModule } from "@angular/service-worker";
@@ -23,6 +24,7 @@ import { SignatureComponent } from "./signature.component";
     MatFormFieldModule,
     MatDatepickerModule,
     MatListModule,
+    MatSelectModule,
     MatButtonModule,
     MatDialogModule,
     MatInputModule,
